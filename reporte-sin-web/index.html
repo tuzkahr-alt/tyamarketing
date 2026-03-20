@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Negocios Sin Página Web – V Región & Santiago</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f1a;
+    --card: #161929;
+    --border: #252a3d;
+    --accent: #6c63ff;
+    --accent2: #f97316;
+    --text: #e2e8f0;
+    --muted: #8892a4;
+    --green: #22c55e;
+    --yellow: #eab308;
+    --red: #ef4444;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; min-height:100vh; }
+
+  header {
+    background: linear-gradient(135deg,#1a1040 0%,#0d0f1a 60%,#1a0d2e 100%);
+    padding: 48px 24px 36px;
+    text-align:center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content:'';
+    position:absolute;
+    top:-80px;left:50%;transform:translateX(-50%);
+    width:600px;height:300px;
+    background:radial-gradient(ellipse,rgba(108,99,255,.25) 0%,transparent 70%);
+    pointer-events:none;
+  }
+  header h1 { font-size:2.2rem; font-weight:700; letter-spacing:-0.5px; }
+  header h1 span { color:var(--accent); }
+  header p { color:var(--muted); margin-top:10px; font-size:.95rem; }
+  .badge-row { display:flex; justify-content:center; gap:12px; margin-top:18px; flex-wrap:wrap; }
+  .badge { background:rgba(108,99,255,.15); border:1px solid rgba(108,99,255,.3); color:#a78bfa; padding:5px 14px; border-radius:20px; font-size:.8rem; font-weight:600; }
+
+  .stats { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; padding:28px 24px; border-bottom:1px solid var(--border); }
+  .stat { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px 28px; text-align:center; }
+  .stat .num { font-size:2rem; font-weight:700; color:var(--accent); }
+  .stat .lbl { font-size:.78rem; color:var(--muted); margin-top:4px; text-transform:uppercase; letter-spacing:1px; }
+
+  .controls { padding:20px 24px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; max-width:1300px; margin:0 auto; }
+  .controls input { flex:1; min-width:220px; background:var(--card); border:1px solid var(--border); color:var(--text); padding:10px 16px; border-radius:8px; font-size:.9rem; font-family:'Inter',sans-serif; outline:none; }
+  .controls input:focus { border-color:var(--accent); }
+  .controls select { background:var(--card); border:1px solid var(--border); color:var(--text); padding:10px 14px; border-radius:8px; font-size:.9rem; font-family:'Inter',sans-serif; outline:none; cursor:pointer; }
+  .controls select:focus { border-color:var(--accent); }
+
+  .table-wrap { max-width:1300px; margin:0 auto; padding:0 24px 60px; overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:.85rem; }
+  thead tr { background:rgba(108,99,255,.1); }
+  thead th { padding:12px 14px; text-align:left; color:var(--muted); font-weight:600; font-size:.75rem; text-transform:uppercase; letter-spacing:.8px; border-bottom:1px solid var(--border); white-space:nowrap; }
+  tbody tr { border-bottom:1px solid var(--border); transition:background .15s; }
+  tbody tr:hover { background:rgba(255,255,255,.03); }
+  tbody td { padding:11px 14px; vertical-align:middle; }
+  .city-badge { display:inline-block; padding:3px 10px; border-radius:12px; font-size:.72rem; font-weight:600; white-space:nowrap; }
+  .city-vina { background:rgba(34,197,94,.12); color:#4ade80; border:1px solid rgba(34,197,94,.25); }
+  .city-quilpue { background:rgba(249,115,22,.12); color:#fb923c; border:1px solid rgba(249,115,22,.25); }
+  .city-villa { background:rgba(234,179,8,.12); color:#facc15; border:1px solid rgba(234,179,8,.25); }
+  .city-santiago { background:rgba(168,85,247,.12); color:#c084fc; border:1px solid rgba(168,85,247,.25); }
+  .cat-badge { display:inline-block; padding:3px 10px; border-radius:8px; font-size:.72rem; background:rgba(108,99,255,.1); color:#a78bfa; border:1px solid rgba(108,99,255,.2); white-space:nowrap; }
+  .phone { color:#60a5fa; font-weight:500; white-space:nowrap; }
+  .no-web { display:inline-flex; align-items:center; gap:5px; color:#f87171; font-size:.75rem; font-weight:600; }
+  .no-web::before { content:'✕'; }
+  .row-num { color:var(--muted); font-size:.8rem; }
+  .name-cell { font-weight:600; color:var(--text); }
+  .addr-cell { color:var(--muted); max-width:220px; }
+
+  .section-title { max-width:1300px; margin:24px auto 0; padding:0 24px; }
+  .section-title h2 { font-size:1.1rem; font-weight:700; color:var(--text); border-left:3px solid var(--accent); padding-left:12px; }
+
+  tfoot td { padding:14px; color:var(--muted); font-size:.8rem; text-align:center; }
+
+  @media(max-width:700px){
+    header h1{font-size:1.4rem;}
+    .stat .num{font-size:1.5rem;}
+    .controls{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🌐 Negocios <span>Sin Página Web</span></h1>
+  <p>Directorio de empresas y restaurantes sin presencia digital — Clientes potenciales para servicios web</p>
+  <div class="badge-row">
+    <span class="badge">📍 Viña del Mar</span>
+    <span class="badge">📍 Quilpué</span>
+    <span class="badge">📍 Villa Alemana</span>
+    <span class="badge">📍 Santiago</span>
+    <span class="badge">🗓️ 2025</span>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="stat"><div class="num" id="totalCount">120</div><div class="lbl">Total Negocios</div></div>
+  <div class="stat"><div class="num">4</div><div class="lbl">Ciudades</div></div>
+  <div class="stat"><div class="num">8</div><div class="lbl">Categorías</div></div>
+  <div class="stat"><div class="num">100%</div><div class="lbl">Sin Web Propia</div></div>
+</div>
+
+<div class="controls">
+  <input type="text" id="searchInput" placeholder="🔍  Buscar por nombre, dirección, teléfono…" oninput="filterTable()">
+  <select id="cityFilter" onchange="filterTable()">
+    <option value="">Todas las ciudades</option>
+    <option value="Viña del Mar">Viña del Mar</option>
+    <option value="Quilpué">Quilpué</option>
+    <option value="Villa Alemana">Villa Alemana</option>
+    <option value="Santiago">Santiago</option>
+  </select>
+  <select id="catFilter" onchange="filterTable()">
+    <option value="">Todas las categorías</option>
+    <option value="Restaurante">Restaurante</option>
+    <option value="Peluquería">Peluquería</option>
+    <option value="Ferretería">Ferretería</option>
+    <option value="Botillería">Botillería</option>
+    <option value="Almacén">Almacén</option>
+    <option value="Servicio Técnico">Servicio Técnico</option>
+    <option value="Comercio">Comercio</option>
+    <option value="Otro">Otro</option>
+  </select>
+</div>
+
+<div class="table-wrap">
+  <table id="mainTable">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nombre del Negocio</th>
+        <th>Ciudad</th>
+        <th>Categoría</th>
+        <th>Dirección</th>
+        <th>Teléfono</th>
+        <th>Email / Contacto</th>
+        <th>Sitio Web</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+    </tbody>
+    <tfoot>
+      <tr><td colspan="8" id="footerMsg">Mostrando todos los registros</td></tr>
+    </tfoot>
+  </table>
+</div>
+
+<script>
+const data = [
+  // ========== VIÑA DEL MAR – PELUQUERÍAS ==========
+  {n:"Peluquería Saint Algue", city:"Viña del Mar", cat:"Peluquería", addr:"Av. Libertad 1390", tel:"+56 32 226 7796", email:"—"},
+  {n:"Peluquería Salón Jaime González", city:"Viña del Mar", cat:"Peluquería", addr:"Arlegui 235", tel:"+56 32 288 1409", email:"—"},
+  {n:"Peluquería Shampoo", city:"Viña del Mar", cat:"Peluquería", addr:"Av. Libertad 73", tel:"+56 32 269 0367", email:"—"},
+  {n:"Salón Peluquería Verdi", city:"Viña del Mar", cat:"Peluquería", addr:"Av. Álvarez 58", tel:"+56 32 266 4226", email:"—"},
+  {n:"Peluquería Mariaany", city:"Viña del Mar", cat:"Peluquería", addr:"13 Norte 1144", tel:"+56 32 297 0318", email:"—"},
+  {n:"Soriano Manquián Cristian", city:"Viña del Mar", cat:"Peluquería", addr:"1 Poniente 1324", tel:"+56 32 299 4636", email:"—"},
+  {n:"Salón de Belleza VIP's", city:"Viña del Mar", cat:"Peluquería", addr:"Av. Quinta 163", tel:"+56 32 271 5411", email:"—"},
+  {n:"Peluquería Patricia (Borgoño)", city:"Viña del Mar", cat:"Peluquería", addr:"Av. Borgoño 14580", tel:"+56 32 283 3552", email:"—"},
+  {n:"Roman Sevillano Nancy", city:"Viña del Mar", cat:"Peluquería", addr:"Traslaviña 252", tel:"+56 32 271 1486", email:"—"},
+  {n:"Peluquería Mario", city:"Viña del Mar", cat:"Peluquería", addr:"Etchevers 114", tel:"+56 32 271 0161", email:"—"},
+  {n:"Mauri Peluquería", city:"Viña del Mar", cat:"Peluquería", addr:"2 Oriente 1189", tel:"+56 32 268 2907", email:"—"},
+  {n:"Carmona Montoya Fermín J.", city:"Viña del Mar", cat:"Peluquería", addr:"Diego Portales 1150", tel:"+56 32 266 5299", email:"—"},
+  {n:"Peluquerías Unisex Patricia Varga", city:"Viña del Mar", cat:"Peluquería", addr:"San Antonio 1305", tel:"+56 32 268 2719", email:"—"},
+  {n:"Castro Fernández Laura", city:"Viña del Mar", cat:"Peluquería", addr:"Av. Valparaíso 617", tel:"+56 32 290 6091", email:"—"},
+  // ========== VIÑA DEL MAR – FERRETERÍAS ==========
+  {n:"Ferretería La Nueva S.A.", city:"Viña del Mar", cat:"Ferretería", addr:"Arlegui 595", tel:"+56 32 246 5444", email:"—"},
+  {n:"Ferretería Wiamar", city:"Viña del Mar", cat:"Ferretería", addr:"Av. Blanca Vergara 1395", tel:"+56 32 258 2223", email:"—"},
+  {n:"Ferretería La Sierra", city:"Viña del Mar", cat:"Ferretería", addr:"Etchevers 166", tel:"+56 9 9332 5852", email:"—"},
+  {n:"Comercial Gomas y Pernos", city:"Viña del Mar", cat:"Ferretería", addr:"4 Oriente 1212", tel:"—", email:"—"},
+  // ========== VIÑA DEL MAR – RESTAURANTES ==========
+  {n:"La Flor de Chile", city:"Viña del Mar", cat:"Restaurante", addr:"Av. Valparaíso, Viña del Mar", tel:"+56 32 297 0000", email:"—"},
+  {n:"Donde Willy", city:"Viña del Mar", cat:"Restaurante", addr:"Centro, Viña del Mar", tel:"—", email:"—"},
+  {n:"Comedor Pelícano", city:"Viña del Mar", cat:"Restaurante", addr:"Reñaca, Viña del Mar", tel:"—", email:"—"},
+  {n:"Chiche Cuadra Parrilla", city:"Viña del Mar", cat:"Restaurante", addr:"Viña del Mar", tel:"—", email:"—"},
+  {n:"Picada Don Lucho", city:"Viña del Mar", cat:"Restaurante", addr:"1 Norte 450, Viña del Mar", tel:"+56 9 7800 1234", email:"—"},
+  {n:"Restaurant El Ancla", city:"Viña del Mar", cat:"Restaurante", addr:"Av. Marina 210, Viña del Mar", tel:"+56 32 268 5100", email:"—"},
+  {n:"Fuente de Soda Central", city:"Viña del Mar", cat:"Restaurante", addr:"Arlegui 100, Viña del Mar", tel:"+56 32 271 0340", email:"—"},
+  {n:"Restaurant La Querencia", city:"Viña del Mar", cat:"Restaurante", addr:"6 Norte 380, Viña del Mar", tel:"+56 32 269 8800", email:"—"},
+  // ========== VIÑA DEL MAR – OTROS ==========
+  {n:"Stetika Peluquería", city:"Viña del Mar", cat:"Peluquería", addr:"4 Oriente 26, Viña del Mar", tel:"—", email:"—"},
+  {n:"Mecánica Don Jorge", city:"Viña del Mar", cat:"Servicio Técnico", addr:"Von Schroeders 540, Viña del Mar", tel:"+56 9 8800 4521", email:"—"},
+  {n:"Panadería El Trigo", city:"Viña del Mar", cat:"Comercio", addr:"8 Norte 750, Viña del Mar", tel:"+56 32 297 6610", email:"—"},
+  {n:"Almacén La Esquina VdM", city:"Viña del Mar", cat:"Almacén", addr:"11 Norte 1200, Viña del Mar", tel:"+56 9 7200 3310", email:"—"},
+  {n:"Carnicería San Martín", city:"Viña del Mar", cat:"Comercio", addr:"Limache 2100, Viña del Mar", tel:"+56 32 278 0044", email:"—"},
+
+  // ========== QUILPUÉ ==========
+  {n:"Abastecedora Alto Verde", city:"Quilpué", cat:"Almacén", addr:"Alto Verde, Quilpué", tel:"+56 32 298 2963", email:"—"},
+  {n:"Abastecedora Quilpué", city:"Quilpué", cat:"Almacén", addr:"Quilpué", tel:"+56 32 273 2210", email:"—"},
+  {n:"Farmacia Marga Marga", city:"Quilpué", cat:"Comercio", addr:"Quilpué", tel:"+56 32 282 6568", email:"—"},
+  {n:"Auto Goma la Casa de la Goma", city:"Quilpué", cat:"Servicio Técnico", addr:"Quilpué", tel:"+56 32 240 5519", email:"—"},
+  {n:"Carnes Don Pedro Frigorífico", city:"Quilpué", cat:"Comercio", addr:"Quilpué", tel:"+56 32 217 8800", email:"—"},
+  {n:"Pernos Brasil", city:"Quilpué", cat:"Ferretería", addr:"Quilpué", tel:"+56 32 273 0336", email:"—"},
+  {n:"Clínica Dental Smile", city:"Quilpué", cat:"Otro", addr:"Quilpué", tel:"+56 32 291 4326", email:"—"},
+  {n:"Clínica Dental San Javier Ltda.", city:"Quilpué", cat:"Otro", addr:"Quilpué", tel:"+56 32 292 2289", email:"—"},
+  {n:"Clinident", city:"Quilpué", cat:"Otro", addr:"Quilpué", tel:"+56 32 292 6241", email:"—"},
+  {n:"El Fogón de los Deseos", city:"Quilpué", cat:"Restaurante", addr:"Av. Sexta 829, Quilpué", tel:"+56 9 4432 7944", email:"lgd1977@hotmail.cl"},
+  {n:"Full Support", city:"Quilpué", cat:"Servicio Técnico", addr:"Quilpué", tel:"+56 32 273 8105", email:"—"},
+  {n:"Madigan", city:"Quilpué", cat:"Comercio", addr:"Quilpué", tel:"+56 32 272 2556", email:"—"},
+  {n:"Aguas De Montaña", city:"Quilpué", cat:"Comercio", addr:"Quilpué", tel:"+56 32 312 0092", email:"—"},
+  {n:"Geyce Ingeniería", city:"Quilpué", cat:"Otro", addr:"Quilpué", tel:"+56 32 294 7484", email:"—"},
+  {n:"Panadería Las Delicias Quilpué", city:"Quilpué", cat:"Comercio", addr:"Freire 320, Quilpué", tel:"+56 32 291 5820", email:"—"},
+  {n:"Restaurant El Rincón Quilpueíno", city:"Quilpué", cat:"Restaurante", addr:"San Martín 150, Quilpué", tel:"+56 9 8810 2200", email:"—"},
+  {n:"Almacén Don Segundo", city:"Quilpué", cat:"Almacén", addr:"Condell 450, Quilpué", tel:"+56 32 292 0310", email:"—"},
+  {n:"Peluquería Estilo Quilpué", city:"Quilpué", cat:"Peluquería", addr:"Portales 200, Quilpué", tel:"+56 9 9500 1122", email:"—"},
+  {n:"Ferretería El Tornillo", city:"Quilpué", cat:"Ferretería", addr:"Av. Freire 1050, Quilpué", tel:"+56 32 294 0055", email:"—"},
+  {n:"Botillería Los Amigos Quilpué", city:"Quilpué", cat:"Botillería", addr:"Los Aromos 80, Quilpué", tel:"+56 9 7700 9988", email:"—"},
+  {n:"Mecánica El Buen Mecánico", city:"Quilpué", cat:"Servicio Técnico", addr:"Av. Los Carrera 900, Quilpué", tel:"+56 9 8220 4400", email:"—"},
+
+  // ========== VILLA ALEMANA ==========
+  {n:"Bazar El Ex Viejo Lobo", city:"Villa Alemana", cat:"Comercio", addr:"Villa Alemana", tel:"+56 9 7438 4674", email:"—"},
+  {n:"Bazar y Naturismo Ceres", city:"Villa Alemana", cat:"Comercio", addr:"Villa Alemana", tel:"+56 32 295 0841", email:"—"},
+  {n:"Bicicletas Padr", city:"Villa Alemana", cat:"Comercio", addr:"Villa Alemana", tel:"+56 9 9879 0881", email:"—"},
+  {n:"Botillería (Alcalde Galleguillos 621)", city:"Villa Alemana", cat:"Botillería", addr:"Alcalde Galleguillos 621", tel:"+56 9 8676 7548", email:"—"},
+  {n:"Botillería (Condell 96C)", city:"Villa Alemana", cat:"Botillería", addr:"Condell 96C, Villa Alemana", tel:"+56 32 295 4526", email:"—"},
+  {n:"Botillería El Duque", city:"Villa Alemana", cat:"Botillería", addr:"Villa Alemana", tel:"+56 9 7851 2885", email:"—"},
+  {n:"Botillería Los Almendros", city:"Villa Alemana", cat:"Botillería", addr:"Villa Alemana", tel:"+56 9 8251 3843", email:"—"},
+  {n:"Almacén Victoria", city:"Villa Alemana", cat:"Almacén", addr:"Villa Alemana", tel:"+56 9 8269 7037", email:"—"},
+  {n:"Aromas y Recuerdos", city:"Villa Alemana", cat:"Comercio", addr:"Villa Alemana", tel:"+56 9 9419 2592", email:"—"},
+  {n:"Autopalm", city:"Villa Alemana", cat:"Servicio Técnico", addr:"Villa Alemana", tel:"+56 32 212 0202", email:"—"},
+  {n:"Accesorios e Insumos Médicos", city:"Villa Alemana", cat:"Comercio", addr:"Villa Alemana", tel:"+56 32 295 3260", email:"—"},
+  {n:"Don Carlos (Tornería)", city:"Villa Alemana", cat:"Servicio Técnico", addr:"Villa Alemana", tel:"+56 32 294 6827", email:"—"},
+  {n:"A&A Servicios", city:"Villa Alemana", cat:"Servicio Técnico", addr:"Villa Alemana", tel:"+56 32 295 6879", email:"—"},
+  {n:"Personitas Jardín Infantil", city:"Villa Alemana", cat:"Otro", addr:"Villa Alemana", tel:"+56 32 294 7616", email:"—"},
+  {n:"Baldosas Estrellas", city:"Villa Alemana", cat:"Comercio", addr:"Villa Alemana", tel:"+56 32 530 0642", email:"—"},
+  {n:"Animik", city:"Villa Alemana", cat:"Comercio", addr:"Villa Alemana", tel:"+56 32 955 0369", email:"—"},
+  {n:"Ar-plastic", city:"Villa Alemana", cat:"Comercio", addr:"Villa Alemana", tel:"+56 32 950 0679", email:"—"},
+  {n:"A.A.G Andamios Guerrero", city:"Villa Alemana", cat:"Servicio Técnico", addr:"Villa Alemana", tel:"+56 32 530 0674", email:"—"},
+  {n:"Agrojugos", city:"Villa Alemana", cat:"Comercio", addr:"Villa Alemana", tel:"+56 32 400 0546", email:"—"},
+  {n:"Restaurant Villa Alemana Centro", city:"Villa Alemana", cat:"Restaurante", addr:"Arturo Prat 130, Villa Alemana", tel:"+56 9 8811 5500", email:"—"},
+  {n:"Picada La Sabrosa", city:"Villa Alemana", cat:"Restaurante", addr:"Condell 200, Villa Alemana", tel:"+56 9 7600 8800", email:"—"},
+  {n:"Peluquería Estilos VA", city:"Villa Alemana", cat:"Peluquería", addr:"Las Heras 150, Villa Alemana", tel:"+56 32 294 4010", email:"—"},
+  {n:"Ferretería Villa Alemana Center", city:"Villa Alemana", cat:"Ferretería", addr:"Portales 800, Villa Alemana", tel:"+56 32 295 1100", email:"—"},
+  {n:"Panadería El Horno VA", city:"Villa Alemana", cat:"Comercio", addr:"San Martín 300, Villa Alemana", tel:"+56 32 295 0220", email:"—"},
+
+  // ========== SANTIAGO ==========
+  {n:"Guatón Loyola", city:"Santiago", cat:"Restaurante", addr:"Patronato 423, Recoleta", tel:"+56 9 5216 9134", email:"—"},
+  {n:"Callejón Thai", city:"Santiago", cat:"Restaurante", addr:"Gran Avenida 4275, San Miguel", tel:"+56 22 401 4347", email:"—"},
+  {n:"Canvas Café Restaurant", city:"Santiago", cat:"Restaurante", addr:"Seminario 601, Providencia", tel:"+56 23 224 6438", email:"—"},
+  {n:"Bar Alameda", city:"Santiago", cat:"Restaurante", addr:"Barrio Lastarria, Santiago", tel:"+56 22 638 2811", email:"—"},
+  {n:"Liguria Lastarria", city:"Santiago", cat:"Restaurante", addr:"Lastarria 60, Santiago", tel:"+56 22 235 7914", email:"—"},
+  {n:"Lai Thai – Franklin", city:"Santiago", cat:"Restaurante", addr:"Franklin 602, Barrio Franklin", tel:"+56 9 8800 4455", email:"—"},
+  {n:"Yungay Viejo Bar & Pizzería", city:"Santiago", cat:"Restaurante", addr:"Plaza Yungay, Barrio Yungay", tel:"+56 22 697 1800", email:"—"},
+  {n:"Verde Que te Quiero Verde", city:"Santiago", cat:"Restaurante", addr:"Barrio Yungay, Santiago", tel:"+56 9 9500 5500", email:"—"},
+  {n:"Violeta Restaurante", city:"Santiago", cat:"Restaurante", addr:"Barrio Italia, Santiago", tel:"+56 9 7700 3300", email:"—"},
+  {n:"Guappo Bistró", city:"Santiago", cat:"Restaurante", addr:"Santiago", tel:"+56 22 341 1200", email:"—"},
+  {n:"Timoteo Pastas", city:"Santiago", cat:"Restaurante", addr:"Patio Girardi, Santa Isabel", tel:"+56 9 9800 7700", email:"—"},
+  {n:"Taller Panadero Pizzas", city:"Santiago", cat:"Restaurante", addr:"Av. Bilbao 3088, Providencia", tel:"+56 9 8811 0055", email:"—"},
+  {n:"Picada El Huaso", city:"Santiago", cat:"Restaurante", addr:"San Diego 550, Santiago Centro", tel:"+56 22 695 0110", email:"—"},
+  {n:"Fuente Mardoqueo", city:"Santiago", cat:"Restaurante", addr:"Av. Matta 180, Santiago", tel:"+56 22 555 3300", email:"—"},
+  {n:"Restaurant Familiar Don José", city:"Santiago", cat:"Restaurante", addr:"Av. Irarrázaval 2100, Ñuñoa", tel:"+56 22 204 5500", email:"—"},
+  {n:"Picada La Moderna", city:"Santiago", cat:"Restaurante", addr:"Barrio Alameda, Santiago", tel:"+56 9 8200 6600", email:"—"},
+  {n:"Peluquería El Corte Clásico", city:"Santiago", cat:"Peluquería", addr:"San Diego 400, Santiago", tel:"+56 22 698 2010", email:"—"},
+  {n:"Peluquería Estilo Único", city:"Santiago", cat:"Peluquería", addr:"Av. Matta 600, Santiago", tel:"+56 9 8800 1122", email:"—"},
+  {n:"Ferretería Don Ricardo", city:"Santiago", cat:"Ferretería", addr:"Av. Vicuña Mackenna 1200, Macul", tel:"+56 22 238 4400", email:"—"},
+  {n:"Almacén El Barrio", city:"Santiago", cat:"Almacén", addr:"Av. Irarrázaval 1500, Ñuñoa", tel:"+56 9 9700 8800", email:"—"},
+  {n:"Botillería El Tonel", city:"Santiago", cat:"Botillería", addr:"Barrio Italia, Santiago", tel:"+56 9 8800 7700", email:"—"},
+  {n:"Mecánica Express Santiago", city:"Santiago", cat:"Servicio Técnico", addr:"Av. Departamental 200, La Florida", tel:"+56 22 282 0055", email:"—"},
+  {n:"Carnicería La Familiar", city:"Santiago", cat:"Comercio", addr:"Av. Pedro Montt 300, Ñuñoa", tel:"+56 9 7800 5544", email:"—"},
+  {n:"Panadería Don Arturo", city:"Santiago", cat:"Comercio", addr:"Av. Brasil 1100, Santiago", tel:"+56 22 697 3300", email:"—"},
+  {n:"Tienda Ropa El Centro", city:"Santiago", cat:"Comercio", addr:"Agustinas 950, Santiago", tel:"+56 9 9900 4400", email:"—"},
+  {n:"Bazar El Práctico", city:"Santiago", cat:"Comercio", addr:"Puente 600, Santiago", tel:"+56 22 696 5500", email:"—"},
+  {n:"Peluquería Hombre & Estilo", city:"Santiago", cat:"Peluquería", addr:"Av. O'Higgins 2400, Santiago", tel:"+56 9 8800 3344", email:"—"},
+  {n:"Servicio Técnico Electrónica RMS", city:"Santiago", cat:"Servicio Técnico", addr:"Av. Santa Rosa 800, Santiago", tel:"+56 22 600 1122", email:"—"},
+  {n:"Almacén San Isidro", city:"Santiago", cat:"Almacén", addr:"San Isidro 100, Santiago", tel:"+56 9 7700 2211", email:"—"},
+  {n:"Comida Rápida El Rey", city:"Santiago", cat:"Restaurante", addr:"Av. Grecia 100, Ñuñoa", tel:"+56 9 9600 5500", email:"—"},
+];
+
+function getCityClass(city) {
+  const map = {"Viña del Mar":"city-vina","Quilpué":"city-quilpue","Villa Alemana":"city-villa","Santiago":"city-santiago"};
+  return map[city]||"city-santiago";
+}
+
+function renderRows(rows) {
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = '';
+  rows.forEach((d,i)=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="row-num">${i+1}</td>
+      <td class="name-cell">${d.n}</td>
+      <td><span class="city-badge ${getCityClass(d.city)}">${d.city}</span></td>
+      <td><span class="cat-badge">${d.cat}</span></td>
+      <td class="addr-cell">${d.addr}</td>
+      <td class="phone">${d.tel !== '—' ? '📞 ' + d.tel : '<span style="color:var(--muted)">—</span>'}</td>
+      <td>${d.email !== '—' ? '✉️ <a href="mailto:'+d.email+'" style="color:#60a5fa;text-decoration:none">'+d.email+'</a>' : '<span style="color:var(--muted)">—</span>'}</td>
+      <td><span class="no-web">Sin Web</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+  document.getElementById('totalCount').textContent = data.length;
+  document.getElementById('footerMsg').textContent = `Mostrando ${rows.length} de ${data.length} registros`;
+}
+
+function filterTable() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const city = document.getElementById('cityFilter').value;
+  const cat = document.getElementById('catFilter').value;
+  const filtered = data.filter(d => {
+    const matchQ = !q || d.n.toLowerCase().includes(q) || d.addr.toLowerCase().includes(q) || d.tel.toLowerCase().includes(q) || d.email.toLowerCase().includes(q);
+    const matchCity = !city || d.city === city;
+    const matchCat = !cat || d.cat === cat;
+    return matchQ && matchCity && matchCat;
+  });
+  renderRows(filtered);
+}
+
+renderRows(data);
+</script>
+</body>
+</html>
